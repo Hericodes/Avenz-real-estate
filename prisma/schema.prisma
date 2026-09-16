@@ -28,14 +28,36 @@ model Business {
   updatedAt    DateTime @updatedAt
   businessType String?
 
-  owner            User              @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  teammateSettings TeammateSettings?
+  owner              User                @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  teammateSettings   TeammateSettings?
+  whatsappConnection WhatsAppConnection?
 
   customers     Customer[]
   conversations Conversation[]
   leads         Lead[]
 
   @@index([ownerId])
+}
+
+model WhatsAppConnection {
+  id String @id @default(cuid())
+
+  businessId String @unique
+
+  wabaId             String
+  phoneNumberId      String @unique
+  displayPhoneNumber String?
+  accessToken        String
+
+  status String @default("connected")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([wabaId])
+  @@index([status])
 }
 
 model TeammateSettings {

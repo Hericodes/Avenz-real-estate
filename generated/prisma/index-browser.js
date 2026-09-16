@@ -140,6 +140,18 @@ exports.Prisma.BusinessScalarFieldEnum = {
   businessType: 'businessType'
 };
 
+exports.Prisma.WhatsAppConnectionScalarFieldEnum = {
+  id: 'id',
+  businessId: 'businessId',
+  wabaId: 'wabaId',
+  phoneNumberId: 'phoneNumberId',
+  displayPhoneNumber: 'displayPhoneNumber',
+  accessToken: 'accessToken',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.TeammateSettingsScalarFieldEnum = {
   id: 'id',
   businessId: 'businessId',
@@ -221,6 +233,7 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Business: 'Business',
+  WhatsAppConnection: 'WhatsAppConnection',
   TeammateSettings: 'TeammateSettings',
   Customer: 'Customer',
   Conversation: 'Conversation',
