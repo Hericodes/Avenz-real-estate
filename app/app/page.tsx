@@ -6,6 +6,7 @@ import { DashboardHeader } from "@/components/app/DashboardHeader";
 import { OverviewCards } from "@/components/app/OverviewCards";
 import { RecentEnquiries } from "@/components/app/RecentEnquiries";
 import { TeammateStatus } from "@/components/app/TeammateStatus";
+import { WhatsAppConnectionCard } from "@/components/app/WhatsAppConnectionCard";
 
 import { authOptions } from "@/lib/auth/options";
 import { prisma } from "@/lib/db/prisma";
@@ -23,6 +24,7 @@ export default async function AppPage() {
     },
     include: {
       teammateSettings: true,
+      whatsappConnection: true,
     },
     orderBy: {
       createdAt: "asc",
@@ -41,10 +43,18 @@ export default async function AppPage() {
     "there";
 
   const teammate = business.teammateSettings;
+  const whatsappConnection = business.whatsappConnection;
+
+  const isWhatsAppConnected =
+    whatsappConnection?.status === "connected";
+
+  const whatsappPhoneNumber =
+    whatsappConnection?.displayPhoneNumber ?? null;
 
   return (
     <AppShell businessName={business.name}>
       <div className="space-y-8">
+
         {/* =====================================================
             DASHBOARD HEADER
         ===================================================== */}
@@ -53,6 +63,14 @@ export default async function AppPage() {
           businessName={business.name}
           businessLocation={business.location}
           teammateName={teammate.name}
+        />
+
+        {/* =====================================================
+            WHATSAPP CONNECTION
+        ===================================================== */}
+        <WhatsAppConnectionCard
+          connected={isWhatsAppConnected}
+          phoneNumber={whatsappPhoneNumber}
         />
 
         {/* =====================================================
@@ -69,6 +87,7 @@ export default async function AppPage() {
             MAIN DASHBOARD
         ===================================================== */}
         <div className="dashboard-main-grid">
+
           {/* Recent customer enquiries */}
           <RecentEnquiries enquiries={[]} />
 
@@ -81,6 +100,7 @@ export default async function AppPage() {
             location={business.location}
             active={teammate.active}
           />
+
         </div>
       </div>
     </AppShell>
